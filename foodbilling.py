@@ -6,7 +6,7 @@ from tkinter import messagebox
 
 root =Tk()
 root.geometry("1350x750+0+0")
-root.title("Food Billing System")
+root.title("WE DELIVER")
 root.configure(background='orange')
 
 Tops = Frame(root,bg='orange',bd=20,pady=5,relief=RIDGE)
