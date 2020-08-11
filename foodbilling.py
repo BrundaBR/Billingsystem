@@ -5,14 +5,16 @@ import random
 from tkinter import messagebox
 
 root =Tk()
-root.geometry("1330x750+0+0")
+root.geometry("1330x650+0+0")
 root.title("WE DELIVER")
-root.configure(background='pink')
+root.configure(background='white')
 
-Tops = Frame(root,bg='pink',bd=2,pady=5,relief=RIDGE)
+Tops = Frame(root,bg='white',bd=2,pady=5,relief=RIDGE)
 Tops.pack(side=TOP)
+second_page = Frame(root,bg='white',bd=2,pady=5,relief=RIDGE)
+second_page.pack(side=TOP)
 
-lblTitle=Label(Tops,font=('arial',60,'bold'),text='WE DELIVER',bd=0,bg='pink',
+lblTitle=Label(Tops,font=('arial',60,'bold'),text='WE DELIVER',bd=0,bg='white',
                fg='black',justify=CENTER)
 lblTitle.grid(row=0)
 
@@ -378,6 +380,8 @@ def Receipt():
     Receipt_Ref.set("Bill"+ randomRef)
 
 
+
+
     txtReceipt.insert(END,'Receipt Ref:\t\t\t'+Receipt_Ref.get() +'\t'+ DateofOrder.get() +'\n')
     txtReceipt.insert(END,'Items\t\t\t\t'+"Cost of Items \n")
     txtReceipt.insert(END,'Sprite:\t\t\t\t\t' + E_Sprite.get() +'\n')
@@ -399,6 +403,24 @@ def Receipt():
     txtReceipt.insert(END,'Cost of Drinks:\t\t\t\t\t'+ CostofDrinks.get()+'\nTax Paid:\t\t\t\t'+PaidTax.get()+"\n")
     txtReceipt.insert(END,'Cost of Foods:\t\t\t\t'+ CostofFood.get()+'\nSubTotal:\t\t\t\t'+str(SubTotal.get())+"\n")
     txtReceipt.insert(END,'Service Charge:\t\t\t\t'+ ServiceCharge.get()+'\nTotal Cost:\t\t\t\t'+str(TotalCost.get())+"\n")
+    
+Sprite=Checkbutton(Drinks_F,text='Sprite',variable=var1,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chkSprite).grid(row=0,sticky=W)
+Pepsi=Checkbutton(Drinks_F,text='Pepsi',variable=var2,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chkPepsi).grid(row=1,sticky=W)
+DietCoke=Checkbutton(Drinks_F,text='DietCoke',variable=var3,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_DietCoke).grid(row=2,sticky=W)
+Mojito=Checkbutton(Drinks_F,text='Mojito',variable=var4,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Mojito).grid(row=3,sticky=W)
+Cappuccino=Checkbutton(Drinks_F,text='Cappuccino',variable=var5,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Cappuccino).grid(row=4,sticky=W)
+Fanta=Checkbutton(Drinks_F,text='Fanta',variable=var6,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Fanta).grid(row=5,sticky=W)
+CocaCola=Checkbutton(Drinks_F,text='CocaCola',variable=var7,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_CocaCola).grid(row=6,sticky=W)
+ColdCoffee=Checkbutton(Drinks_F,text='ColdCoffee',variable=var8,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_ColdCoffee).grid(row=7,sticky=W)
+
 
 
 #########################################Drinks####################################################################
@@ -550,6 +572,7 @@ txtReceipt=Text(Receipt_F,width=46,height=12,bg='white',bd=1,font=('arial',12,'b
 txtReceipt.grid(row=0,column=0)
 
 
+
 ###########################################BUTTONS################################################################################
 btnTotal=Button(Buttons_F,padx=16,pady=1,bd=1,fg='black',font=('arial',16,'bold'),width=4,text='Total',
                         bg='orange',command=CostofItem).grid(row=0,column=0)
@@ -559,6 +582,7 @@ btnReset=Button(Buttons_F,padx=16,pady=1,bd=1,fg='black',font=('arial',16,'bold'
                         bg='orange',command=Reset).grid(row=0,column=2)
 btnExit=Button(Buttons_F,padx=16,pady=1,bd=1,fg='black',font=('arial',16,'bold'),width=4,text='Exit',
                         bg='orange',command=iExit).grid(row=0,column=3)
+
 
 ###################################Calculator Display################################################################################
 
@@ -629,7 +653,19 @@ btnDiv=Button(Cal_F,padx=16,pady=1,bd=7,fg='black',font=('arial',16,'bold'),widt
 
 
 
+def items_list():
+    Tops.pack_forget()
+    ReceiptCal_F .pack_forget()
+    Cal_F.pack_forget()
+    Buttons_F.pack_forget()
+    MenuFrame.pack_forget()
+    Cost_F.pack_forget()
+    Food_F.pack_forget()
+    Drinks_F.pack_forget()
+    second_page.config(background="lavender")
+    second_page.pack()
 
-
+button_2 = Button(Buttons_F, text="Items", width=30, height=2, command=items_list, font=('times new roman', 10)).grid(row=0,column=4)
+    
 
 root.mainloop()
