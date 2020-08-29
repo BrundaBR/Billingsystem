@@ -64,7 +64,7 @@ var13=IntVar()
 var14=IntVar()
 var15=IntVar()
 var16=IntVar()
-
+var17=IntVar()
 DateofOrder = StringVar()
 Receipt_Ref = StringVar()
 PaidTax = StringVar()
@@ -72,6 +72,7 @@ SubTotal = StringVar()
 TotalCost = StringVar()
 CostofFood = StringVar()
 CostofDrinks = StringVar()
+E_other=StringVar()
 ServiceCharge = StringVar()
 
 text_Input = StringVar()
@@ -112,7 +113,7 @@ E_Rava.set("0")
 E_Rice.set("0")
 E_Sugar.set("0")
 E_oil.set("0")
-
+E_other.set("0")
 DateofOrder.set(time.strftime("%d/%m/%y"))
 
 ##########################################Function Declaration####################################################
@@ -151,7 +152,7 @@ def Reset():
     E_Rice.set("0")
     E_Sugar.set("0")
     E_oil.set("0")
-
+    E_other.set("0")
     var1.set(0)
     var2.set(0)
     var3.set(0)
@@ -168,6 +169,7 @@ def Reset():
     var14.set(0)
     var15.set(0)
     var16.set(0)
+    var17.set(0)
 
 
     txtMilk.configure(state=DISABLED)
@@ -186,7 +188,7 @@ def Reset():
     txtRice.configure(state=DISABLED)
     txtSugar.configure(state=DISABLED)
     txtoil.configure(state=DISABLED)
-
+    txtother.configure(state=DISABLED)
 def CostofItem():
     Item1=float(E_Milk.get())
     Item2=float(E_Tea.get())
@@ -205,10 +207,11 @@ def CostofItem():
     Item14=float(E_Rice.get())
     Item15=float(E_Sugar.get())
     Item16=float(E_oil.get())
+    item17=float(E_other.get())
 
     PriceofDrinks =(Item1 * 26) + (Item2 * 235) + (Item3 * 95) + (Item4 * 135) + (Item5 * 35) + (Item6 * 33) + (Item7 * 34) + (Item8 * 78)
 
-    PriceofFood =(Item9 * 29) + (Item10 * 9.6) + (Item11 * 99) + (Item12 * 38) + (Item13 * 39) + (Item14 * 39) + (Item15 * 37) + (Item16 * 104)
+    PriceofFood =(Item9 * 29) + (Item10 * 9.6) + (Item11 * 99) + (Item12 * 38) + (Item13 * 39) + (Item14 * 39) + (Item15 * 37) + (Item16 * 104) + item17
 
 
 
@@ -216,19 +219,27 @@ def CostofItem():
     FoodPrice =  "Rs",str('%.2f'%(PriceofFood))
     CostofFood.set(FoodPrice)
     CostofDrinks.set(DrinksPrice)
-    SC = "Rs",str('%.2f'%(1.59))
+    SC = "Rs",str('%.2f'%(1.0))
     ServiceCharge.set(SC)
 
     SubTotalofITEMS = "Rs",str('%.2f'%(PriceofDrinks + PriceofFood + 1.59))
     SubTotal.set(SubTotalofITEMS)
 
-    Tax = "Rs",str('%.2f'%((PriceofDrinks + PriceofFood + 1.59) * 0.15))
+    Tax = "Rs",str('%.2f'%((PriceofDrinks + PriceofFood + 1.0) * 0.15))
     PaidTax.set(Tax)
 
-    TT=((PriceofDrinks + PriceofFood + 1.59) * 0.15)
+    TT=((PriceofDrinks + PriceofFood ) * 0.15)
     TC="Rs",str('%.2f'%(PriceofDrinks + PriceofFood + 1.59 + TT))
     TotalCost.set(TC)
-
+def chkother():
+    if(var17.get() == 1):
+        txtother.configure(state = NORMAL)
+        txtother.focus()
+        txtother.delete('0',END)
+        E_other.set("")
+    elif(var17.get() == 0):
+        txtother.configure(state = DISABLED)
+        E_other.set("0")
 
 def chkMilk():
     if(var1.get() == 1):
@@ -403,6 +414,7 @@ def Receipt():
     txtReceipt.insert(END,'Rice-1kg:\t\t\t\t\t'+ E_Rice.get()+'\n')
     txtReceipt.insert(END,'Sugar-1kg:\t\t\t\t\t'+ E_Sugar.get()+'\n')
     txtReceipt.insert(END,'Sunflowe oil-1l:\t\t\t\t\t'+ E_oil.get()+'\n')
+    txtReceipt.insert(END,'Others:\t\t\t\t\t'+ E_other.get()+'\n')
     txtReceipt.insert(END,'Cost of Items:\t\t\t\t\t'+ CostofDrinks.get()+'\nTax Paid:\t\t\t\t'+PaidTax.get()+"\n")
     txtReceipt.insert(END,'Cost of Foods:\t\t\t\t'+ CostofFood.get()+'\nSubTotal:\t\t\t\t'+str(SubTotal.get())+"\n")
     txtReceipt.insert(END,'Service Charge:\t\t\t\t'+ ServiceCharge.get()+'\nTotal Cost:\t\t\t\t'+str(TotalCost.get())+"\n")
@@ -494,6 +506,8 @@ Sugar = Checkbutton(Food_F,text="Sugar-1kg ",variable=var15,onvalue = 1, offvalu
                         font=('arial',16,'bold'),bg='white',command=chk_Sugar).grid(row=6,sticky=W)
 oil = Checkbutton(Food_F,text="Sunflower oil-1l ",variable=var16,onvalue = 1, offvalue=0,
                         font=('arial',16,'bold'),bg='white',command=chk_oil).grid(row=7,sticky=W)
+other = Checkbutton(Food_F,text="Others ",variable=var17,onvalue = 1, offvalue=0,
+                        font=('arial',16,'bold'),bg='white',command=chkother).grid(row=8,sticky=W)
 ################################################Entry Box For Cake##########################################################
 txtMaida=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
                         textvariable=E_Maida)
@@ -526,6 +540,10 @@ txtSugar.grid(row=6,column=1)
 txtoil=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
                         textvariable=E_oil)
 txtoil.grid(row=7,column=1)
+txtother=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,
+                        textvariable=E_other)
+txtother.grid(row=8,column=1)
+
 ###########################################ToTal Cost################################################################################
 lblCostofDrinks=Label(Cost_F,font=('arial',14,'bold'),text='Cost of Drinks\t',bg='white',
                 fg='black',justify=CENTER)
