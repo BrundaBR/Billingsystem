@@ -3,7 +3,10 @@ import time
 import datetime
 import random
 from tkinter import messagebox
-
+import tkinter.messagebox
+#import py_mysql_connector
+import pymysql
+import mysql.connector
 root =Tk()
 root.geometry("1330x650+0+0")
 root.title("WE DELIVER")
@@ -11,8 +14,8 @@ root.configure(background='white')
 
 Tops = Frame(root,bg='white',bd=2,pady=5,relief=RIDGE)
 Tops.pack(side=TOP)
-second_page = Frame(root,bg='white',bd=2,pady=5,relief=RIDGE)
-second_page.pack(side=TOP)
+second_page = Frame(root)
+
 
 lblTitle=Label(Tops,font=('arial',60,'bold'),text='WE DELIVER',bd=0,bg='white',
                fg='black',justify=CENTER)
@@ -74,41 +77,41 @@ ServiceCharge = StringVar()
 text_Input = StringVar()
 operator = ""
 
-E_Sprite = StringVar()
-E_Pepsi = StringVar()
-E_DietCoke = StringVar()
-E_Mojito = StringVar()
-E_Cappuccino = StringVar()
-E_Fanta = StringVar()
-E_CocaCola = StringVar()
-E_ColdCoffee = StringVar()
+E_Milk = StringVar()
+E_Tea = StringVar()
+E_Toor = StringVar()
+E_Urad = StringVar()
+E_Wheat = StringVar()
+E_Sevai = StringVar()
+E_Turmeric= StringVar()
+E_Sabudana = StringVar()
 
-E_HotDog = StringVar()
-E_VegBurger = StringVar()
-E_Pasta = StringVar()
-E_HamBurger = StringVar()
-E_Sandwich = StringVar()
-E_Fires = StringVar()
-E_Spagetti = StringVar()
-E_Fazitas = StringVar()
+E_Maida = StringVar()
+E_Salt = StringVar()
+E_Peanut = StringVar()
+E_Poha = StringVar()
+E_Rava = StringVar()
+E_Rice = StringVar()
+E_Sugar = StringVar()
+E_oil = StringVar()
 
-E_Sprite.set("0")
-E_Pepsi.set("0")
-E_DietCoke.set("0")
-E_Mojito.set("0")
-E_Cappuccino.set("0")
-E_Fanta.set("0")
-E_CocaCola.set("0")
-E_ColdCoffee.set("0")
+E_Milk.set("0")
+E_Tea.set("0")
+E_Toor.set("0")
+E_Urad.set("0")
+E_Wheat.set("0")
+E_Sevai.set("0")
+E_Turmeric.set("0")
+E_Sabudana.set("0")
 
-E_HotDog.set("0")
-E_VegBurger.set("0")
-E_Pasta.set("0")
-E_HamBurger.set("0")
-E_Sandwich.set("0")
-E_Fires.set("0")
-E_Spagetti.set("0")
-E_Fazitas.set("0")
+E_Maida.set("0")
+E_Salt.set("0")
+E_Peanut.set("0")
+E_Poha.set("0")
+E_Rava.set("0")
+E_Rice.set("0")
+E_Sugar.set("0")
+E_oil.set("0")
 
 DateofOrder.set(time.strftime("%d/%m/%y"))
 
@@ -131,23 +134,23 @@ def Reset():
     txtReceipt.delete("1.0",END)
 
 
-    E_Sprite.set("0")
-    E_Pepsi.set("0")
-    E_DietCoke.set("0")
-    E_Mojito.set("0")
-    E_Cappuccino.set("0")
-    E_Fanta.set("0")
-    E_CocaCola.set("0")
-    E_ColdCoffee.set("0")
+    E_Milk.set("0")
+    E_Tea.set("0")
+    E_Toor.set("0")
+    E_Urad.set("0")
+    E_Wheat.set("0")
+    E_Sevai.set("0")
+    E_Turmeric.set("0")
+    E_Sabudana.set("0")
 
-    E_HotDog.set("0")
-    E_VegBurger.set("0")
-    E_Pasta.set("0")
-    E_HamBurger.set("0")
-    E_Sandwich.set("0")
-    E_Fires.set("0")
-    E_Spagetti.set("0")
-    E_Fazitas.set("0")
+    E_Maida.set("0")
+    E_Salt.set("0")
+    E_Peanut.set("0")
+    E_Poha.set("0")
+    E_Rava.set("0")
+    E_Rice.set("0")
+    E_Sugar.set("0")
+    E_oil.set("0")
 
     var1.set(0)
     var2.set(0)
@@ -167,45 +170,45 @@ def Reset():
     var16.set(0)
 
 
-    txtSprite.configure(state=DISABLED)
-    txtPepsi.configure(state=DISABLED)
-    txtDietCoke.configure(state=DISABLED)
-    txtMojito.configure(state=DISABLED)
-    txtCappuccino.configure(state=DISABLED)
-    txtFanta.configure(state=DISABLED)
-    txtCocaCola.configure(state=DISABLED)
-    txtColdCoffee.configure(state=DISABLED)
-    txtHotDog.configure(state=DISABLED)
-    txtVegBurger.configure(state=DISABLED)
-    txtPasta.configure(state=DISABLED)
-    txtHamBurger.configure(state=DISABLED)
-    txtSandwich.configure(state=DISABLED)
-    txtFires.configure(state=DISABLED)
-    txtSpagetti.configure(state=DISABLED)
-    txtFazitas.configure(state=DISABLED)
+    txtMilk.configure(state=DISABLED)
+    txtTea.configure(state=DISABLED)
+    txtToor.configure(state=DISABLED)
+    txtUrad.configure(state=DISABLED)
+    txtWheat.configure(state=DISABLED)
+    txtSevai.configure(state=DISABLED)
+    txtTurmeric.configure(state=DISABLED)
+    txtSabudana.configure(state=DISABLED)
+    txtMaida.configure(state=DISABLED)
+    txtSalt.configure(state=DISABLED)
+    txtPeanut.configure(state=DISABLED)
+    txtPoha.configure(state=DISABLED)
+    txtRava.configure(state=DISABLED)
+    txtRice.configure(state=DISABLED)
+    txtSugar.configure(state=DISABLED)
+    txtoil.configure(state=DISABLED)
 
 def CostofItem():
-    Item1=float(E_Sprite.get())
-    Item2=float(E_Pepsi.get())
-    Item3=float(E_DietCoke.get())
-    Item4=float(E_Mojito.get())
-    Item5=float(E_Cappuccino.get())
-    Item6=float(E_Fanta.get())
-    Item7=float(E_CocaCola.get())
-    Item8=float(E_ColdCoffee.get())
+    Item1=float(E_Milk.get())
+    Item2=float(E_Tea.get())
+    Item3=float(E_Toor.get())
+    Item4=float(E_Urad.get())
+    Item5=float(E_Wheat.get())
+    Item6=float(E_Sevai.get())
+    Item7=float(E_Turmeric.get())
+    Item8=float(E_Sabudana.get())
 
-    Item9=float(E_HotDog.get())
-    Item10=float(E_VegBurger.get())
-    Item11=float(E_Pasta.get())
-    Item12=float(E_HamBurger.get())
-    Item13=float(E_Sandwich.get())
-    Item14=float(E_Fires.get())
-    Item15=float(E_Spagetti.get())
-    Item16=float(E_Fazitas.get())
+    Item9=float(E_Maida.get())
+    Item10=float(E_Salt.get())
+    Item11=float(E_Peanut.get())
+    Item12=float(E_Poha.get())
+    Item13=float(E_Rava.get())
+    Item14=float(E_Rice.get())
+    Item15=float(E_Sugar.get())
+    Item16=float(E_oil.get())
 
-    PriceofDrinks =(Item1 * 65) + (Item2 * 75) + (Item3 * 99) + (Item4 * 130) + (Item5 * 180) + (Item6 * 75) + (Item7 * 75) + (Item8 * 89)
+    PriceofDrinks =(Item1 * 26) + (Item2 * 235) + (Item3 * 95) + (Item4 * 135) + (Item5 * 35) + (Item6 * 33) + (Item7 * 34) + (Item8 * 78)
 
-    PriceofFood =(Item9 * 260) + (Item10 * 175) + (Item11 * 255) + (Item12 * 480) + (Item13 * 240) + (Item14 * 110) + (Item15 * 340) + (Item16 * 213)
+    PriceofFood =(Item9 * 29) + (Item10 * 9.6) + (Item11 * 99) + (Item12 * 38) + (Item13 * 39) + (Item14 * 39) + (Item15 * 37) + (Item16 * 104)
 
 
 
@@ -227,151 +230,151 @@ def CostofItem():
     TotalCost.set(TC)
 
 
-def chkSprite():
+def chkMilk():
     if(var1.get() == 1):
-        txtSprite.configure(state = NORMAL)
-        txtSprite.focus()
-        txtSprite.delete('0',END)
-        E_Sprite.set("")
+        txtMilk.configure(state = NORMAL)
+        txtMilk.focus()
+        txtMilk.delete('0',END)
+        E_Milk.set("")
     elif(var1.get() == 0):
-        txtSprite.configure(state = DISABLED)
-        E_Sprite.set("0")
+        txtMilk.configure(state = DISABLED)
+        E_Milk.set("0")
 
-def chkPepsi():
+def chkTea():
     if(var2.get() == 1):
-        txtPepsi.configure(state = NORMAL)
-        txtPepsi.focus()
-        txtPepsi.delete('0',END)
-        E_Pepsi.set("")
+        txtTea.configure(state = NORMAL)
+        txtTea.focus()
+        txtTea.delete('0',END)
+        E_Tea.set("")
     elif(var2.get() == 0):
-        txtPepsi.configure(state = DISABLED)
-        E_Pepsi.set("0")
+        txtTea.configure(state = DISABLED)
+        E_Tea.set("0")
 
-def chk_DietCoke():
+def chk_Toor():
     if(var3.get() == 1):
-        txtDietCoke.configure(state = NORMAL)
-        txtDietCoke.delete('0',END)
-        txtDietCoke.focus()
+        txtToor.configure(state = NORMAL)
+        txtToor.delete('0',END)
+        txtToor.focus()
     elif(var3.get() == 0):
-        txtDietCoke.configure(state = DISABLED)
-        E_DietCoke.set("0")
+        txtToor.configure(state = DISABLED)
+        E_Toor.set("0")
 
-def chk_Mojito():
+def chk_Urad():
     if(var4.get() == 1):
-        txtMojito.configure(state = NORMAL)
-        txtMojito.delete('0',END)
-        txtMojito.focus()
+        txtUrad.configure(state = NORMAL)
+        txtUrad.delete('0',END)
+        txtUrad.focus()
     elif(var4.get() == 0):
-        txtMojito.configure(state = DISABLED)
-        E_Mojito.set("0")
+        txtUrad.configure(state = DISABLED)
+        E_Urad.set("0")
 
-def chk_Cappuccino():
+def chk_Wheat():
     if(var5.get() == 1):
-        txtCappuccino.configure(state = NORMAL)
-        txtCappuccino.delete('0',END)
-        txtCappuccino.focus()
+        txtWheat.configure(state = NORMAL)
+        txtWheat.delete('0',END)
+        txtWheat.focus()
     elif(var5.get() == 0):
-        txtCappuccino.configure(state = DISABLED)
-        E_Cappuccino.set("0")
+        txtWheat.configure(state = DISABLED)
+        E_Wheat.set("0")
 
-def chk_Fanta():
+def chk_Sevai():
     if(var6.get() == 1):
-        txtFanta.configure(state = NORMAL)
-        txtFanta.delete('0',END)
-        txtFanta.focus()
+        txtSevai.configure(state = NORMAL)
+        txtSevai.delete('0',END)
+        txtSevai.focus()
     elif(var6.get() == 0):
-        txtFanta.configure(state = DISABLED)
-        E_Fanta.set("0")
+        txtSevai.configure(state = DISABLED)
+        E_Sevai.set("0")
 
-def chk_CocaCola():
+def chk_Turmeric():
     if(var7.get() == 1):
-        txtCocaCola.configure(state = NORMAL)
-        txtCocaCola.delete('0',END)
-        txtCocaCola.focus()
+        txtTurmeric.configure(state = NORMAL)
+        txtTurmeric.delete('0',END)
+        txtTurmeric.focus()
     elif(var7.get() == 0):
-        txtCocaCola.configure(state = DISABLED)
-        E_CocaCola.set("0")
+        txtTurmeric.configure(state = DISABLED)
+        E_Turmeric.set("0")
 
-def chk_ColdCoffee():
+def chk_Sabudana():
     if(var8.get() == 1):
-        txtColdCoffee.configure(state = NORMAL)
-        txtColdCoffee.delete('0',END)
-        txtColdCoffee.focus()
+        txtSabudana.configure(state = NORMAL)
+        txtSabudana.delete('0',END)
+        txtSabudana.focus()
     elif(var8.get() == 0):
-        txtColdCoffee.configure(state = DISABLED)
-        E_ColdCoffee.set("0")
+        txtSabudana.configure(state = DISABLED)
+        E_Sabudana.set("0")
 
-def chk_HotDog():
+def chk_Maida():
     if(var9.get() == 1):
-        txtHotDog.configure(state = NORMAL)
-        txtHotDog.delete('0',END)
-        txtHotDog.focus()
+        txtMaida.configure(state = NORMAL)
+        txtMaida.delete('0',END)
+        txtMaida.focus()
     elif(var9.get() == 0):
-        txtHotDog.configure(state = DISABLED)
-        E_HotDog.set("0")
+        txtMaida.configure(state = DISABLED)
+        E_Maida.set("0")
 
-def chk_VegBurger():
+def chk_Salt():
     if(var10.get() == 1):
-        txtVegBurger.configure(state = NORMAL)
-        txtVegBurger.delete('0',END)
-        txtVegBurger.focus()
+        txtSalt.configure(state = NORMAL)
+        txtSalt.delete('0',END)
+        txtSalt.focus()
     elif(var10.get() == 0):
-        txtVegBurger.configure(state = DISABLED)
-        E_VegBurger.set("0")
+        txtSalt.configure(state = DISABLED)
+        E_Salt.set("0")
 
-def chk_Pasta():
+def chk_Peanut():
     if(var11.get() == 1):
-        txtPasta.configure(state = NORMAL)
-        txtPasta.delete('0',END)
-        txtPasta.focus()
+        txtPeanut.configure(state = NORMAL)
+        txtPeanut.delete('0',END)
+        txtPeanut.focus()
     elif(var11.get() == 0):
-        txtPasta.configure(state = DISABLED)
-        E_Pasta.set("0")
+        txtPeanut.configure(state = DISABLED)
+        E_Peanut.set("0")
 
-def chk_HamBurger():
+def chk_Poha():
     if(var12.get() == 1):
-        txtHamBurger.configure(state = NORMAL)
-        txtHamBurger.delete('0',END)
-        txtHamBurger.focus()
+        txtPoha.configure(state = NORMAL)
+        txtPoha.delete('0',END)
+        txtPoha.focus()
     elif(var12.get() == 0):
-        txtHamBurger.configure(state = DISABLED)
-        E_HamBurger.set("0")
+        txtPoha.configure(state = DISABLED)
+        E_Poha.set("0")
 
-def chk_Sandwich():
+def chk_Rava():
     if(var13.get() == 1):
-        txtSandwich.configure(state = NORMAL)
-        txtSandwich.delete('0',END)
-        txtSandwich.focus()
+        txtRava.configure(state = NORMAL)
+        txtRava.delete('0',END)
+        txtRava.focus()
     elif(var13.get() == 0):
-        txtSandwich.configure(state = DISABLED)
-        E_Sandwich.set("0")
+        txtRava.configure(state = DISABLED)
+        E_Rava.set("0")
 
-def chk_Fires():
+def chk_Rice():
     if(var14.get() == 1):
-        txtFires.configure(state = NORMAL)
-        txtFires.delete('0',END)
-        txtFires.focus()
+        txtRice.configure(state = NORMAL)
+        txtRice.delete('0',END)
+        txtRice.focus()
     elif(var14.get() == 0):
-        txtFires.configure(state = DISABLED)
-        E_Fires.set("0")
+        txtRice.configure(state = DISABLED)
+        E_Rice.set("0")
 
-def chk_Spagetti():
+def chk_Sugar():
     if(var15.get() == 1):
-        txtSpagetti.configure(state = NORMAL)
-        txtSpagetti.delete('0',END)
-        txtSpagetti.focus()
+        txtSugar.configure(state = NORMAL)
+        txtSugar.delete('0',END)
+        txtSugar.focus()
     elif(var15.get() == 0):
-        txtSpagetti.configure(state = DISABLED)
-        E_Spagetti.set("0")
+        txtSugar.configure(state = DISABLED)
+        E_Sugar.set("0")
 
-def chk_Fazitas():
+def chk_oil():
     if(var16.get() == 1):
-        txtFazitas.configure(state = NORMAL)
-        txtFazitas.delete('0',END)
-        txtFazitas.focus()
+        txtoil.configure(state = NORMAL)
+        txtoil.delete('0',END)
+        txtoil.focus()
     elif(var16.get() == 0):
-        txtFazitas.configure(state = DISABLED)
-        E_Fazitas.set("0")
+        txtoil.configure(state = DISABLED)
+        E_oil.set("0")
 
 def Receipt():
     txtReceipt.delete("1.0",END)
@@ -384,145 +387,145 @@ def Receipt():
 
     txtReceipt.insert(END,'Receipt Ref:\t\t\t'+Receipt_Ref.get() +'\t'+ DateofOrder.get() +'\n')
     txtReceipt.insert(END,'Items\t\t\t\t'+"Cost of Items \n")
-    txtReceipt.insert(END,'Sprite:\t\t\t\t\t' + E_Sprite.get() +'\n')
-    txtReceipt.insert(END,'Pepsi:\t\t\t\t\t'+ E_Pepsi.get()+'\n')
-    txtReceipt.insert(END,'DietCoke:\t\t\t\t\t'+ E_DietCoke.get()+'\n')
-    txtReceipt.insert(END,'Mojito:\t\t\t\t\t'+ E_Mojito.get()+'\n')
-    txtReceipt.insert(END,'Cappuccino:\t\t\t\t\t'+ E_Cappuccino.get()+'\n')
-    txtReceipt.insert(END,'Fanta:\t\t\t\t\t'+ E_Fanta.get()+'\n')
-    txtReceipt.insert(END,'CocaCola:\t\t\t\t\t'+ E_CocaCola.get()+'\n')
-    txtReceipt.insert(END,'ColdCoffee:\t\t\t\t\t'+ E_ColdCoffee.get()+'\n')
-    txtReceipt.insert(END,'HotDog:\t\t\t\t\t'+ E_HotDog.get()+'\n')
-    txtReceipt.insert(END,'VegBurger:\t\t\t\t\t'+ E_VegBurger.get()+'\n')
-    txtReceipt.insert(END,'Pasta:\t\t\t\t\t'+ E_Pasta.get()+'\n')
-    txtReceipt.insert(END,'HamBurger:\t\t\t\t\t'+ E_HamBurger.get()+'\n')
-    txtReceipt.insert(END,'Sandwich:\t\t\t\t\t'+ E_Sandwich.get()+'\n')
-    txtReceipt.insert(END,'Fires:\t\t\t\t\t'+ E_Fires.get()+'\n')
-    txtReceipt.insert(END,'Spagetti:\t\t\t\t\t'+ E_Spagetti.get()+'\n')
-    txtReceipt.insert(END,'Fazitas:\t\t\t\t\t'+ E_Fazitas.get()+'\n')
-    txtReceipt.insert(END,'Cost of Drinks:\t\t\t\t\t'+ CostofDrinks.get()+'\nTax Paid:\t\t\t\t'+PaidTax.get()+"\n")
+    txtReceipt.insert(END,'Milk-500ml:\t\t\t\t' + E_Milk.get() +'\n')
+    txtReceipt.insert(END,'Tea-powder-1kg:\t\t\t\t\t'+ E_Tea.get()+'\n')
+    txtReceipt.insert(END,'Toordal-1kg:\t\t\t\t\t'+ E_Toor.get()+'\n')
+    txtReceipt.insert(END,'Uraddal-1kg:\t\t\t\t\t'+ E_Urad.get()+'\n')
+    txtReceipt.insert(END,'Wheatflour-1kg:\t\t\t\t\t'+ E_Wheat.get()+'\n')
+    txtReceipt.insert(END,'Sevai-500gms:\t\t\t\t\t'+ E_Sevai.get()+'\n')
+    txtReceipt.insert(END,'Turmeric-250gms:\t\t\t\t\t'+ E_Turmeric.get()+'\n')
+    txtReceipt.insert(END,'Sabudana-1kg:\t\t\t\t\t'+ E_Sabudana.get()+'\n')
+    txtReceipt.insert(END,'Maida-1Kg:\t\t\t\t\t'+ E_Maida.get()+'\n')
+    txtReceipt.insert(END,'Salt-1kg:\t\t\t\t\t'+ E_Salt.get()+'\n')
+    txtReceipt.insert(END,'Peanut-1kg:\t\t\t\t\t'+ E_Peanut.get()+'\n')
+    txtReceipt.insert(END,'Poha-1kg:\t\t\t\t\t'+ E_Poha.get()+'\n')
+    txtReceipt.insert(END,'Rava(s)-1kg:\t\t\t\t\t'+ E_Rava.get()+'\n')
+    txtReceipt.insert(END,'Rice-1kg:\t\t\t\t\t'+ E_Rice.get()+'\n')
+    txtReceipt.insert(END,'Sugar-1kg:\t\t\t\t\t'+ E_Sugar.get()+'\n')
+    txtReceipt.insert(END,'Sunflowe oil-1l:\t\t\t\t\t'+ E_oil.get()+'\n')
+    txtReceipt.insert(END,'Cost of Items:\t\t\t\t\t'+ CostofDrinks.get()+'\nTax Paid:\t\t\t\t'+PaidTax.get()+"\n")
     txtReceipt.insert(END,'Cost of Foods:\t\t\t\t'+ CostofFood.get()+'\nSubTotal:\t\t\t\t'+str(SubTotal.get())+"\n")
     txtReceipt.insert(END,'Service Charge:\t\t\t\t'+ ServiceCharge.get()+'\nTotal Cost:\t\t\t\t'+str(TotalCost.get())+"\n")
     
-Sprite=Checkbutton(Drinks_F,text='Sprite',variable=var1,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chkSprite).grid(row=0,sticky=W)
-Pepsi=Checkbutton(Drinks_F,text='Pepsi',variable=var2,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chkPepsi).grid(row=1,sticky=W)
-DietCoke=Checkbutton(Drinks_F,text='DietCoke',variable=var3,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_DietCoke).grid(row=2,sticky=W)
-Mojito=Checkbutton(Drinks_F,text='Mojito',variable=var4,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_Mojito).grid(row=3,sticky=W)
-Cappuccino=Checkbutton(Drinks_F,text='Cappuccino',variable=var5,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_Cappuccino).grid(row=4,sticky=W)
-Fanta=Checkbutton(Drinks_F,text='Fanta',variable=var6,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_Fanta).grid(row=5,sticky=W)
-CocaCola=Checkbutton(Drinks_F,text='CocaCola',variable=var7,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_CocaCola).grid(row=6,sticky=W)
-ColdCoffee=Checkbutton(Drinks_F,text='ColdCoffee',variable=var8,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_ColdCoffee).grid(row=7,sticky=W)
+Milk=Checkbutton(Drinks_F,text='Milk',variable=var1,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chkMilk).grid(row=0,sticky=W)
+Tea=Checkbutton(Drinks_F,text='Tea-powder-1kg',variable=var2,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chkTea).grid(row=1,sticky=W)
+Toor=Checkbutton(Drinks_F,text='Toordal-1kg',variable=var3,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Toor).grid(row=2,sticky=W)
+Urad=Checkbutton(Drinks_F,text='Uraddal-1kg ',variable=var4,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Urad).grid(row=3,sticky=W)
+Wheat=Checkbutton(Drinks_F,text='Wheatflour-1kg',variable=var5,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Wheat).grid(row=4,sticky=W)
+Sevai=Checkbutton(Drinks_F,text='Sevai-500gms',variable=var6,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Sevai).grid(row=5,sticky=W)
+Turmeric=Checkbutton(Drinks_F,text='Turmeric-250gms',variable=var7,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Turmeric).grid(row=6,sticky=W)
+Sabudana=Checkbutton(Drinks_F,text='Sabudana',variable=var8,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Sabudana).grid(row=7,sticky=W)
 
 
 
 #########################################Drinks####################################################################
-Sprite=Checkbutton(Drinks_F,text='Sprite',variable=var1,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chkSprite).grid(row=0,sticky=W)
-Pepsi=Checkbutton(Drinks_F,text='Pepsi',variable=var2,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chkPepsi).grid(row=1,sticky=W)
-DietCoke=Checkbutton(Drinks_F,text='DietCoke',variable=var3,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_DietCoke).grid(row=2,sticky=W)
-Mojito=Checkbutton(Drinks_F,text='Mojito',variable=var4,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_Mojito).grid(row=3,sticky=W)
-Cappuccino=Checkbutton(Drinks_F,text='Cappuccino',variable=var5,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_Cappuccino).grid(row=4,sticky=W)
-Fanta=Checkbutton(Drinks_F,text='Fanta',variable=var6,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_Fanta).grid(row=5,sticky=W)
-CocaCola=Checkbutton(Drinks_F,text='CocaCola',variable=var7,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_CocaCola).grid(row=6,sticky=W)
-ColdCoffee=Checkbutton(Drinks_F,text='ColdCoffee',variable=var8,onvalue=1,offvalue=0,font=('arial',18,'bold'),
-                    bg='white',command=chk_ColdCoffee).grid(row=7,sticky=W)
+Milk=Checkbutton(Drinks_F,text='Milk',variable=var1,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chkMilk).grid(row=0,sticky=W)
+Tea=Checkbutton(Drinks_F,text='Tea-powder-1kg',variable=var2,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chkTea).grid(row=1,sticky=W)
+Toor=Checkbutton(Drinks_F,text='Toordal-1kg',variable=var3,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Toor).grid(row=2,sticky=W)
+Urad=Checkbutton(Drinks_F,text='Uraddal-1kg ',variable=var4,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Urad).grid(row=3,sticky=W)
+Wheat=Checkbutton(Drinks_F,text='Wheatflour-1kg',variable=var5,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Wheat).grid(row=4,sticky=W)
+Sevai=Checkbutton(Drinks_F,text='Sevai-500gms',variable=var6,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Sevai).grid(row=5,sticky=W)
+Turmeric=Checkbutton(Drinks_F,text='Turmeric-250gms',variable=var7,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Turmeric).grid(row=6,sticky=W)
+Sabudana=Checkbutton(Drinks_F,text='Sabudana',variable=var8,onvalue=1,offvalue=0,font=('arial',18,'bold'),
+                    bg='white',command=chk_Sabudana).grid(row=7,sticky=W)
 ##############################################Drink Entry###############################################################
 
-txtSprite = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
-                        ,textvariable=E_Sprite)
-txtSprite.grid(row=0,column=1)
+txtMilk = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
+                        ,textvariable=E_Milk)
+txtMilk.grid(row=0,column=1)
 
-txtPepsi = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
-                        ,textvariable=E_Pepsi)
-txtPepsi.grid(row=1,column=1)
+txtTea = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
+                        ,textvariable=E_Tea)
+txtTea.grid(row=1,column=1)
 
-txtDietCoke = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
-                        ,textvariable=E_DietCoke)
-txtDietCoke.grid(row=2,column=1)
+txtToor = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
+                        ,textvariable=E_Toor)
+txtToor.grid(row=2,column=1)
 
-txtMojito= Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
-                        ,textvariable=E_Mojito)
-txtMojito.grid(row=3,column=1)
+txtUrad= Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
+                        ,textvariable=E_Urad)
+txtUrad.grid(row=3,column=1)
 
-txtCappuccino = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
-                        ,textvariable=E_Cappuccino)
-txtCappuccino.grid(row=4,column=1)
+txtWheat = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
+                        ,textvariable=E_Wheat)
+txtWheat.grid(row=4,column=1)
 
-txtFanta = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
-                        ,textvariable=E_Fanta)
-txtFanta.grid(row=5,column=1)
+txtSevai = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
+                        ,textvariable=E_Sevai)
+txtSevai.grid(row=5,column=1)
 
-txtCocaCola = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
-                        ,textvariable=E_CocaCola)
-txtCocaCola.grid(row=6,column=1)
+txtTurmeric = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
+                        ,textvariable=E_Turmeric)
+txtTurmeric.grid(row=6,column=1)
 
-txtColdCoffee = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
-                        ,textvariable=E_ColdCoffee)
-txtColdCoffee.grid(row=7,column=1)
+txtSabudana = Entry(Drinks_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED
+                        ,textvariable=E_Sabudana)
+txtSabudana.grid(row=7,column=1)
 #############################################Foods######################################################################
 
-HotDog = Checkbutton(Food_F,text="HotDog\t\t\t ",variable=var9,onvalue = 1, offvalue=0,
-                        font=('arial',16,'bold'),bg='white',command=chk_HotDog).grid(row=0,sticky=W)
-VegBurger = Checkbutton(Food_F,text="VegBurger",variable=var10,onvalue = 1, offvalue=0,
-                        font=('arial',16,'bold'),bg='white',command=chk_VegBurger).grid(row=1,sticky=W)
-Pasta = Checkbutton(Food_F,text="Pasta ",variable=var11,onvalue = 1, offvalue=0,
-                        font=('arial',16,'bold'),bg='white',command=chk_Pasta).grid(row=2,sticky=W)
-HamBurger = Checkbutton(Food_F,text="Rice Plate ",variable=var12,onvalue = 1, offvalue=0,
-                        font=('arial',16,'bold'),bg='white',command=chk_HamBurger).grid(row=3,sticky=W)
-Sandwich = Checkbutton(Food_F,text="Sandwich ",variable=var13,onvalue = 1, offvalue=0,
-                        font=('arial',16,'bold'),bg='white',command=chk_Sandwich).grid(row=4,sticky=W)
-Fires = Checkbutton(Food_F,text="Fires ",variable=var14,onvalue = 1, offvalue=0,
-                        font=('arial',16,'bold'),bg='white',command=chk_Fires).grid(row=5,sticky=W)
-Spagetti = Checkbutton(Food_F,text="Spagetti ",variable=var15,onvalue = 1, offvalue=0,
-                        font=('arial',16,'bold'),bg='white',command=chk_Spagetti).grid(row=6,sticky=W)
-Fazitas = Checkbutton(Food_F,text="Fazitas ",variable=var16,onvalue = 1, offvalue=0,
-                        font=('arial',16,'bold'),bg='white',command=chk_Fazitas).grid(row=7,sticky=W)
+Maida = Checkbutton(Food_F,text="Maida-1Kg ",variable=var9,onvalue = 1, offvalue=0,
+                        font=('arial',16,'bold'),bg='white',command=chk_Maida).grid(row=0,sticky=W)
+Salt = Checkbutton(Food_F,text="Salt",variable=var10,onvalue = 1, offvalue=0,
+                        font=('arial',16,'bold'),bg='white',command=chk_Salt).grid(row=1,sticky=W)
+Peanut = Checkbutton(Food_F,text="Peanut-1kg ",variable=var11,onvalue = 1, offvalue=0,
+                        font=('arial',16,'bold'),bg='white',command=chk_Peanut).grid(row=2,sticky=W)
+Poha = Checkbutton(Food_F,text="Poha-1kg ",variable=var12,onvalue = 1, offvalue=0,
+                        font=('arial',16,'bold'),bg='white',command=chk_Poha).grid(row=3,sticky=W)
+Rava= Checkbutton(Food_F,text="Rava(s) ",variable=var13,onvalue = 1, offvalue=0,
+                        font=('arial',16,'bold'),bg='white',command=chk_Rava).grid(row=4,sticky=W)
+Fires = Checkbutton(Food_F,text="Rice-1kg ",variable=var14,onvalue = 1, offvalue=0,
+                        font=('arial',16,'bold'),bg='white',command=chk_Rice).grid(row=5,sticky=W)
+Sugar = Checkbutton(Food_F,text="Sugar-1kg ",variable=var15,onvalue = 1, offvalue=0,
+                        font=('arial',16,'bold'),bg='white',command=chk_Sugar).grid(row=6,sticky=W)
+oil = Checkbutton(Food_F,text="Sunflower oil-1l ",variable=var16,onvalue = 1, offvalue=0,
+                        font=('arial',16,'bold'),bg='white',command=chk_oil).grid(row=7,sticky=W)
 ################################################Entry Box For Cake##########################################################
-txtHotDog=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
-                        textvariable=E_HotDog)
-txtHotDog.grid(row=0,column=1)
+txtMaida=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
+                        textvariable=E_Maida)
+txtMaida.grid(row=0,column=1)
 
-txtVegBurger=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
-                        textvariable=E_VegBurger)
-txtVegBurger.grid(row=1,column=1)
+txtSalt=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
+                        textvariable=E_Salt)
+txtSalt.grid(row=1,column=1)
 
-txtPasta=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
-                        textvariable=E_Pasta)
-txtPasta.grid(row=2,column=1)
+txtPeanut=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
+                        textvariable=E_Peanut)
+txtPeanut.grid(row=2,column=1)
 
-txtHamBurger=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
-                        textvariable=E_HamBurger)
-txtHamBurger.grid(row=3,column=1)
+txtPoha=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
+                        textvariable=E_Poha)
+txtPoha.grid(row=3,column=1)
 
-txtSandwich=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
-                        textvariable=E_Sandwich)
-txtSandwich.grid(row=4,column=1)
+txtRava=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
+                        textvariable=E_Rava)
+txtRava.grid(row=4,column=1)
 
-txtFires=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
-                        textvariable=E_Fires)
-txtFires.grid(row=5,column=1)
+txtRice=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
+                        textvariable=E_Rice)
+txtRice.grid(row=5,column=1)
 
-txtSpagetti=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
-                        textvariable=E_Spagetti)
-txtSpagetti.grid(row=6,column=1)
+txtSugar=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
+                        textvariable=E_Sugar)
+txtSugar.grid(row=6,column=1)
 
-txtFazitas=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
-                        textvariable=E_Fazitas)
-txtFazitas.grid(row=7,column=1)
+txtoil=Entry(Food_F,font=('arial',16,'bold'),bd=1,width=6,justify=LEFT,state=DISABLED,
+                        textvariable=E_oil)
+txtoil.grid(row=7,column=1)
 ###########################################ToTal Cost################################################################################
 lblCostofDrinks=Label(Cost_F,font=('arial',14,'bold'),text='Cost of Drinks\t',bg='white',
                 fg='black',justify=CENTER)
@@ -654,14 +657,19 @@ btnDiv=Button(Cal_F,padx=16,pady=1,bd=7,fg='black',font=('arial',16,'bold'),widt
 
 
 def items_list():
+    #forget all frames
     Tops.pack_forget()
     ReceiptCal_F .pack_forget()
     Cal_F.pack_forget()
     Buttons_F.pack_forget()
     MenuFrame.pack_forget()
     Cost_F.pack_forget()
-    Food_F.pack_forget()
-    Drinks_F.pack_forget()
+    #Food_F.pack_forget()
+    #Drinks_F.pack_forget()
+    #connect to database
+    
+
+
     second_page.config(background="lavender")
     second_page.pack()
 
